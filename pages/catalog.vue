@@ -1,125 +1,50 @@
 <template>
-  <v-layout>
-    <v-flex>
-      <v-layout justify-start align-start wrap>
-        <v-flex v-for="(item,i) in items" :key="`card-${i}`" xs12 sm5 md4 lg4 xl2 class="pa-2">
-          <v-card :class="{sale: item.sale}" nuxt to="/">
-            <div class="photo">
-              <v-img :src="item.imgUrl" class="image" contain></v-img>
-              <div class="top-block">
-                <v-icon large color="teal accent-3" v-if="item.new">fiber_new</v-icon>
-                <v-icon x-large color="red accent-3" v-if="item.sale">star</v-icon>
-              </div>
-            </div>
-            <v-card-title class="font-weight-bold py-0 pt-3 card-subtitle">{{item.mark}}</v-card-title>
-            <v-card-text
-              class="title py-1 card-title font-weight-thin text-truncate"
-            >{{item.model}}</v-card-text>
-            <v-card-text class="price mt-2 py-0">
-              <div class="price__now">{{item.price}} грн</div>
-              <div class="price__old">{{item.oldPrice}} грн</div>
-            </v-card-text>
-            <v-card-actions>
-              <v-spacer/>
-              <v-btn color="teal accent-3" round flat nuxt to="/inspire">Перейти</v-btn>
-              <v-btn color="teal accent-3" flat icon nuxt to="/inspire">
-                <v-icon dark>add</v-icon>
-              </v-btn>
-            </v-card-actions>
-          </v-card>
-        </v-flex>
-      </v-layout>
+  <v-layout justify-start align-start wrap>
+
+    <v-flex v-for="(item,i) in items" :key="`card-${i}`" xs12 sm5 md4 lg4 xl2 class="pa-2">
+
+      <v-card :class="{sale: item.sale}">
+      
+        <div class="photo">
+          <v-img :src="item.imgUrl" class="image" contain></v-img>
+          <div class="top-block">
+            <v-icon large color="teal accent-3" v-if="item.new">fiber_new</v-icon>
+            <v-icon x-large color="red accent-3" v-if="item.sale">star</v-icon>
+          </div>
+        </div>
+
+        <v-card-title class="font-weight-bold py-0 pt-3 card-subtitle">{{item.mark}}</v-card-title>
+        <v-card-text class="title py-1 card-title font-weight-thin text-truncate">{{item.model}}</v-card-text>
+        <v-card-text class="price mt-2 py-0">
+          <div class="price__now">{{item.price}} грн</div>
+          <div class="price__old">{{item.oldPrice}} грн</div>
+        </v-card-text>
+
+        <v-card-actions>
+          <v-spacer/>
+          <v-btn color="teal accent-3" round flat nuxt to="/inspire">Перейти</v-btn>
+          <v-btn color="teal accent-3" flat icon nuxt to="/inspire">
+            <v-icon dark>add</v-icon>
+          </v-btn>
+        </v-card-actions>
+
+      </v-card>
+
     </v-flex>
+
   </v-layout>
 </template>
+
 <script>
 export default {
+  async asyncData(vm){
+    let items = await vm.store.getters['catalog/products']
+    // console.log(vm.store.getters['catalog/products']);
+    return {items}
+  },
   data() {
     return {
-      count: 3,
-      items: [
-        {
-          mark: "Under Armour1",
-          model: "UA HOVR SLK UA HOVR SLKUA HOVR SLK",
-          price: 9700,
-          oldPrice: 99000,
-          sale: true,
-          new: true,
-          imgUrl: require(`@/assets/images/product/mini.jpg`)
-        },
-        {
-          mark: "Under Armour2",
-          model: "UA HOVR SLK UA HOVR SLKUA HOVR SLK",
-          price: 2700,
-          oldPrice: 79000,
-          sale: false,
-          new: true,
-          imgUrl: require(`@/assets/images/product/mini.jpg`)
-        },
-        {
-          mark: "Under Armour3",
-          model: "UA HOVR SLK UA HOVR SLKUA HOVR SLK",
-          price: 97454,
-          oldPrice: 99453,
-          sale: false,
-          new: false,
-          imgUrl: require(`@/assets/images/product/mini.jpg`)
-        },
-        {
-          mark: "Under Armour4",
-          model: "UA HOVR SLK UA HOVR SLKUA HOVR SLK",
-          price: 9700,
-          oldPrice: 99000,
-          sale: true,
-          new: true,
-          imgUrl: require(`@/assets/images/product/mini.jpg`)
-        },
-        {
-          mark: "Under Armour5",
-          model: "UA HOVR SLK UA HOVR SLKUA HOVR SLK",
-          price: 9700,
-          oldPrice: 99000,
-          sale: false,
-          new: true,
-          imgUrl: require(`@/assets/images/product/mini.jpg`)
-        },
-        {
-          mark: "Under Armour6",
-          model: "UA HOVR SLK UA HOVR SLKUA HOVR SLK",
-          price: 9700,
-          oldPrice: 99000,
-          sale: false,
-          new: false,
-          imgUrl: require(`@/assets/images/product/mini.jpg`)
-        },
-        {
-          mark: "Under Armour7",
-          model: "UA HOVR SLK UA HOVR SLKUA HOVR SLK",
-          price: 9700,
-          oldPrice: 99000,
-          sale: true,
-          new: true,
-          imgUrl: require(`@/assets/images/product/mini.jpg`)
-        },
-        {
-          mark: "Under Armour8",
-          model: "UA HOVR SLK UA HOVR SLKUA HOVR SLK",
-          price: 9700,
-          oldPrice: 99000,
-          sale: false,
-          new: true,
-          imgUrl: require(`@/assets/images/product/mini.jpg`)
-        },
-        {
-          mark: "Under Armour9",
-          model: "UA HOVR SLK UA HOVR SLKUA HOVR SLK",
-          price: 9700,
-          oldPrice: 99000,
-          sale: false,
-          new: false,
-          imgUrl: require(`@/assets/images/product/mini.jpg`)
-        }
-      ]
+      count: 3
     };
   },
   methods: {
