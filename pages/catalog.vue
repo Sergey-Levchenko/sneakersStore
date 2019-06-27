@@ -1,10 +1,7 @@
 <template>
   <v-layout justify-start align-start wrap>
-
     <v-flex v-for="(item,i) in items" :key="`card-${i}`" xs12 sm5 md4 lg4 xl2 class="pa-2">
-
       <v-card :class="{sale: item.sale}">
-      
         <div class="photo">
           <v-img :src="item.imgUrl" class="image" contain></v-img>
           <div class="top-block">
@@ -27,20 +24,18 @@
             <v-icon dark>add</v-icon>
           </v-btn>
         </v-card-actions>
-
       </v-card>
-
     </v-flex>
-
   </v-layout>
 </template>
 
 <script>
+import fb from "firebase/app";
 export default {
-  async asyncData(vm){
-    let items = await vm.store.getters['catalog/products']
+  async asyncData(vm) {
+    let items = await vm.store.getters["catalog/products"];
     // console.log(vm.store.getters['catalog/products']);
-    return {items}
+    return { items };
   },
   data() {
     return {
@@ -50,7 +45,23 @@ export default {
   methods: {
     load() {
       this.count += 2;
+    },
+    async getData() {
+      const item = await fb.database().ref('users').once('value');
+      const items = item.val();
+      const arrayItems = [];
+      for(let elem in items){
+        arrayItems.push(items[elem])
+      }
+      // items.toArray().forEach(element => {
+        
+      //   console.log(element.age);
+      // });
+      console.log(arrayItems);
     }
+  },
+  mounted(){
+    this.getData();
   }
 };
 </script>
