@@ -1,6 +1,13 @@
 <template>
   <v-app dark>
-    <v-navigation-drawer v-model="drawer" :mini-variant="miniVariant" :clipped="clipped" fixed app>
+    <v-navigation-drawer
+      temporary
+      v-model="drawer"
+      :mini-variant="miniVariant"
+      :clipped="clipped"
+      fixed
+      app
+    >
       <v-list>
         <v-list-tile v-for="(item, i) in items" :key="i" :to="item.to" router exact>
           <v-list-tile-action>
@@ -18,7 +25,16 @@
 
       <v-toolbar-title v-text="title"/>
       <v-spacer/>
-      
+      <v-badge left overlap color="teal accent-3">
+        <template v-slot:badge>
+          <span :style="{color:'#212121', fontWeight:500}">6</span>
+        </template>
+        <v-btn flat icon @click="cart = !cart">
+          <v-icon>shopping_cart</v-icon>
+        </v-btn>
+      </v-badge>
+
+      <cart :cart="cart"></cart>
     </v-toolbar>
     <v-content>
       <v-container>
@@ -33,12 +49,14 @@
 </template>
 
 <script>
+import cart from "~/components/Cart.vue";
 export default {
   data() {
     return {
       clipped: false,
       drawer: false,
       fixed: false,
+      cart:false,
       items: [
         {
           icon: "apps",
@@ -59,6 +77,21 @@ export default {
       miniVariant: false,
       title: "Vuetify.js"
     };
+  },
+  components:{
+    cart
+  },
+  mounted(){
+    
   }
 };
 </script>
+<style lang="scss" scoped>
+.cart {
+  position: fixed;
+  top: 100%;
+  right: 0px;
+  width: 300px;
+}
+</style>
+
